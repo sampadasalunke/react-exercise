@@ -21,6 +21,14 @@ const columns = [
   {
     field: "title",
     title: " ",
+    cell: (props) => (
+      <td>
+        {props.dataItem.icon && (
+          <img src={props.dataItem.icon} alt="Icon" style={{ marginRight: '5px', width: '16px', height: '16px', border:'1px solid #ddd' }} />
+        )}
+        {props.dataItem.title}
+      </td>
+    ),
   },
   {
     field: "percentage",
