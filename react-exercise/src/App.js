@@ -1,22 +1,58 @@
 import React from 'react';
-import {
-  TreeList,
-  orderBy,
-  filterBy,
-  mapTree,
-  extendDataItem,
-} from "@progress/kendo-react-treelist";
+import { TreeList, orderBy, filterBy, mapTree, extendDataItem, TreeListCell } from '@progress/kendo-react-treelist';
 import data from "./simple-data";
 import '@progress/kendo-theme-default/dist/all.css';
+import logo from './logo.svg';
+
+
+const imageStyle = {
+  width: '30',         // Set the width
+  height: '30',        // Set the height
+  margin: '-3px',         // Set margin (spacing around the image)
+  textAlign: 'bottom',    // Align the image to the center
+  padding: '1px',         // Set padding (spacing within the image container)
+  verticalAlign: 'bottom'
+};
+
+const treeListCellStyle = {
+  margin: '-5px',         // Set margin (spacing around the image)
+  textAlign: 'center',    // Align the image to the center
+  padding: '1px',         // Set padding (spacing within the image container)
+  verticalAlign: 'top'
+};
+
+const CustomCell = (props) => {
+  return (
+    <td>
+      <tr >
+    <TreeListCell {...props}>
+      {props.dataItem.hasChildren && (
+        <button
+          onClick={() => {
+            props.onToggle(props.dataItem);
+          }}
+          className={`k-icon ${
+            props.dataItem.expanded ? 'k-i-collapse' : 'k-i-expand'
+          }`}
+        ></button>
+      )} style={treeListCellStyle} 
+    </TreeListCell>
+    <img src={logo} width="30" height="30" className="contact-img" style={imageStyle} alt="Icon"/>
+    <span> {props.dataItem.name} </span>
+   
+    </tr>
+    </td>
+  );
+};
 
 const subItemsField = "employees";
 const expandField = "expanded";
 const columns = [
   {
-    field: "name",
     title: " ",
     width: "1500px",
     expandable: true,
+    cell: CustomCell,
   },
   {
     field: "title",
@@ -35,7 +71,6 @@ const columns = [
     title: " ",
   },
 ];
-
 
 const App = () => {
   const [state, setState] = React.useState({
